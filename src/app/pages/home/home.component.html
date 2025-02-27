@@ -1,0 +1,157 @@
+<section
+  class="d-flex justify-content-center align-items-start min-vh-100 py-4"
+>
+  <div class="container py-4">
+    <!--button-->
+    <div class="d-flex justify-content-center">
+      <button
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        class="btn btn-primary"
+      >
+        Add Note
+      </button>
+    </div>
+
+    <!--search-->
+
+    <div class="my-3">
+      <input
+        [(ngModel)]="myTitle"
+        type="search"
+        class="form-control w-50 mx-auto"
+        placeholder="search..."
+      />
+    </div>
+
+    <!--row-->
+
+    <div class="row g-4 mt-2">
+      @for (note of notesData | search : myTitle ; track note._id ) {
+
+      <div class="col-md-3">
+        <div class="p-3 border rounded">
+          <div class="card-body py-2">
+            <h4 class="card-title">{{ note.title }}</h4>
+            <p class="card-text">{{ note.content }}</p>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <!--responsible for set update data-->
+            <button
+              (click)="setUpdateData(note, note._id)"
+              data-bs-toggle="modal"
+              data-bs-target="#updateModal"
+              class="btn btn-outline-warning"
+            >
+              Update
+            </button>
+            <button
+              (click)="deleteUserNotes(note._id)"
+              class="btn btn-outline-danger"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      }
+    </div>
+  </div>
+</section>
+
+<!--Add Note Modal-->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Note</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addNoteForm" (ngSubmit)="submitAddNoteForm()">
+          <div class="mb-3">
+            <label for="title" class="col-form-label">title</label>
+            <input
+              formControlName="title"
+              type="text"
+              class="form-control"
+              id="title"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="content" class="col-form-label">content:</label>
+            <textarea
+              formControlName="content"
+              class="form-control"
+              id="content"
+            ></textarea>
+          </div>
+
+          <button data-bs-dismiss="modal" type="submit" class="btn btn-primary">
+            Add Note
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Update Note Modal-->
+<div
+  class="modal fade"
+  id="updateModal"
+  tabindex="-1"
+  aria-labelledby="updateModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateModalLabel">Update Your Note</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateNoteForm" (ngSubmit)="submitUpdateNoteForm()">
+          <div class="mb-3">
+            <label for="title" class="col-form-label">title</label>
+            <input
+              formControlName="title"
+              type="text"
+              class="form-control"
+              id="title"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="content" class="col-form-label">content:</label>
+            <textarea
+              formControlName="content"
+              class="form-control"
+              id="content"
+            ></textarea>
+          </div>
+
+          <button data-bs-dismiss="modal" type="submit" class="btn btn-warning">
+            Update Note
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

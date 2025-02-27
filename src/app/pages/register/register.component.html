@@ -1,0 +1,144 @@
+<section class="bg-main-light w-75 mx-auto shadow rounded-2 p-3">
+  <h1 class="text-primary fw-light fs-1 text-center">Register Now</h1>
+
+  <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+    <div class="mb-2">
+      <label for="name" class="form-label">name</label>
+      <input
+        formControlName="name"
+        type="text"
+        class="form-control"
+        id="name"
+      />
+
+      @if (registerForm.get('name')?.errors && registerForm.get('name')?.touched
+      ) {
+      <div class="alert alert-danger mt-1 py-1 px-2" role="alert">
+        <ul>
+          @if (registerForm.get('name')?.getError('required')) {
+          <li>Name is required</li>
+          } @else if (registerForm.get('name')?.getError('minlength')) {
+          <li>Name Should be more than or equal 3 chars</li>
+          } @else if (registerForm.get('name')?.getError('maxlength')) {
+          <li>Name Should be less than or equal 20 chars</li>
+          }
+        </ul>
+      </div>
+      }
+    </div>
+    <div class="mb-2">
+      <label for="email" class="form-label">email</label>
+      <input
+        formControlName="email"
+        type="email"
+        class="form-control"
+        id="email"
+      />
+
+      @if (registerForm.get('email')?.errors &&
+      registerForm.get('email')?.touched) {
+      <div class="alert alert-danger mt-1 py-1 px-2" role="alert">
+        <ul>
+          @if (registerForm.get('email')?.getError('required')) {
+          <li>Email is required</li>
+          } @else if (registerForm.get('email')?.getError('email')) {
+          <li>Enter Valid Email</li>
+          }
+        </ul>
+      </div>
+      }
+    </div>
+    <div class="mb-2">
+      <label for="password" class="form-label">password</label>
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control"
+        id="password"
+      />
+      @if (registerForm.get('password')?.errors &&
+      registerForm.get('password')?.touched) {
+
+      <div class="alert alert-danger mt-1 py-1 px-2" role="alert">
+        <ul>
+          @if (registerForm.get('password')?.getError('required')) {
+          <li>Password is required</li>
+          } @else if (registerForm.get('password')?.getError('pattern')) {
+          <li>
+            Password must start with upperCase then from 6 to more any word
+            chars.
+          </li>
+          }
+        </ul>
+      </div>
+
+      }
+    </div>
+    <div class="mb-2">
+      <label for="age" class="form-label">age</label>
+      <input
+        formControlName="age"
+        type="number"
+        class="form-control"
+        id="age"
+      />
+
+      @if (registerForm.get('age')?.errors && registerForm.get('age')?.touched)
+      {
+      <div class="alert alert-danger mt-1 py-1 px-2" role="alert">
+        <ul>
+          @if (registerForm.get('age')?.getError('required')) {
+          <li>Age is required</li>
+          } @else if (registerForm.get('age')?.getError('pattern')) {
+          <li>Invalid age! Please enter a number between 10 and 80.</li>
+
+          }
+        </ul>
+      </div>
+      }
+    </div>
+    <div class="mb-2">
+      <label for="phone" class="form-label">phone</label>
+      <input
+        formControlName="phone"
+        type="tel"
+        class="form-control"
+        id="phone"
+      />
+
+      @if (registerForm.get('phone')?.errors &&
+      registerForm.get('phone')?.touched) {
+      <div class="alert alert-danger mt-1 py-1 px-2" role="alert">
+        <ul>
+          @if (registerForm.get('phone')?.getError('required')) {
+          <li>Phone is required</li>
+          } @else if (registerForm.get('phone')?.getError('pattern')) {
+          <li>Phone must be only egypt phone numbers</li>
+
+          }
+        </ul>
+      </div>
+      }
+    </div>
+
+    <button
+      [disabled]="isLoading"
+      type="submit"
+      class="btn btn-primary auth-btn"
+    >
+      Sign Up @if (isLoading) {
+      <i class="fas fa-spinner"></i>
+      }
+    </button>
+
+    @if (successMsg) {
+    <div class="alert alert-success my-3" role="alert">
+      {{ successMsg }}
+    </div>
+    } @if (errMsg) {
+    <div class="alert alert-danger my-3" role="alert">
+      {{ errMsg }}
+    </div>
+    }
+  </form>
+</section>

@@ -1,0 +1,73 @@
+<section class="bg-main-light w-75 mx-auto shadow rounded-2 p-3">
+  <h1 class="text-primary fw-light fs-1 text-center">Login Now</h1>
+
+  <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+    <div class="mb-2">
+      <label for="email" class="form-label">email</label>
+      <input
+        formControlName="email"
+        type="email"
+        class="form-control"
+        id="email"
+      />
+
+      @if (loginForm.get('email')?.errors && loginForm.get('email')?.touched) {
+      <div class="alert alert-danger mt-1 py-1 px-2" role="alert">
+        <ul>
+          @if (loginForm.get('email')?.getError('required')) {
+          <li>Email is required</li>
+          } @else if (loginForm.get('email')?.getError('email')) {
+          <li>Enter Valid Email</li>
+          }
+        </ul>
+      </div>
+      }
+    </div>
+    <div class="mb-2">
+      <label for="password" class="form-label">password</label>
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control"
+        id="password"
+      />
+      @if (loginForm.get('password')?.errors &&
+      loginForm.get('password')?.touched) {
+
+      <div class="alert alert-danger mt-1 py-1 px-2" role="alert">
+        <ul>
+          @if (loginForm.get('password')?.getError('required')) {
+          <li>Password is required</li>
+          } @else if (loginForm.get('password')?.getError('pattern')) {
+          <li>
+            Password must start with upperCase then from 6 to more any word
+            chars.
+          </li>
+          }
+        </ul>
+      </div>
+
+      }
+    </div>
+
+    <button
+      [disabled]="isLoading"
+      type="submit"
+      class="btn btn-primary auth-btn"
+    >
+      Sign In @if (isLoading) {
+      <i class="fas fa-spinner"></i>
+      }
+    </button>
+
+    @if (successMsg) {
+    <div class="alert alert-success my-3" role="alert">
+      {{ successMsg }}
+    </div>
+    } @if (errMsg) {
+    <div class="alert alert-danger my-3" role="alert">
+      {{ errMsg }}
+    </div>
+    }
+  </form>
+</section>
